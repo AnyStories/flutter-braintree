@@ -5,13 +5,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {
-            url "https://cardinalcommerce.bintray.com/android"
-            credentials {
-                username 'braintree-team-sdk@cardinalcommerce'
-                password '220cc9476025679c4e5c843666c27d97cfb0f951'
-            }
-        }
     }
 
     dependencies {
@@ -28,6 +21,23 @@ rootProject.allprojects {
             credentials {
                 username 'braintree-team-sdk@cardinalcommerce'
                 password '220cc9476025679c4e5c843666c27d97cfb0f951'
+            }
+        }
+    }
+    dependencies {
+        // Your dependency declarations...
+        components.all {
+            allVariants {
+                withDependencies { deps ->
+                    deps.each { dep ->
+                        if (dep.group == 'net.minidev' && dep.name =='json-smart') {
+                            dep.version {
+                                prefer "2.3"
+                            }
+                            dep.because "resolving dependencies issue"
+                        }
+                    }
+                }
             }
         }
     }
